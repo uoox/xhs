@@ -29,7 +29,7 @@
 - 代码无注释；全部文案中文；只有这一个 CLAUDE.md，给人看的只有 README.md，给 agent 用的是 SKILL.md。不新增解释性 md。
 - 写操作必须 `--yes`/`--execute`，未确认时返回 `confirm_required`（退出码 2）且不发任何请求。
 - 新命令：先用 `xhs call <path> --args …` 在页面里验证封装和参数，再在 `api.rs` 加规整函数、`main.rs` 加子命令，并同步 README 和 SKILL.md。
-- 构建：`~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo build --release`；安装 `cargo install --path .` 后软链 `~/.local/bin/xhs`。
+- 构建：`PATH=~/.rustup/toolchains/1.95-aarch64-apple-darwin/bin:$PATH cargo build --release（cargo 不在默认 PATH，rustc 必须同在 PATH 否则报 could not execute process rustc）`；安装 `cargo install --path .` 后软链 `~/.local/bin/xhs`。
 
 ## 验证规矩
 

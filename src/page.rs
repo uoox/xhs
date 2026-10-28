@@ -127,15 +127,8 @@ impl Page {
             match self.probe(t) {
                 Ok(v) => {
                     let href = v["href"].as_str().unwrap_or("");
-                    if let Some(e) = self.risk_from_href(href) {
-                        let _ = self
-                            .amcu
-                            .run(&["tab".into(), "--close".into(), "--tab".into(), t.to_string()], Duration::from_secs(20));
-                        self.tab = None;
-                        self.save_tab();
-                        return Err(e);
-                    }
-                    if v["app"].as_bool() == Some(true) && v["host"].as_str().map(|h| h.ends_with("xiaohongshu.com")).unwrap_or(false) {
+                    if href.contains("website-login/error") {
+                    } else if v["app"].as_bool() == Some(true) && v["host"].as_str().map(|h| h.ends_with("xiaohongshu.com")).unwrap_or(false) {
                         if !self.loaded {
                             self.loaded = true;
                         }
