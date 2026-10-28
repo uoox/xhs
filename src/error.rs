@@ -74,7 +74,11 @@ pub fn classify_api(profile: &str, code: Option<i64>, status: Option<i64>, msg: 
     let c = code.or(status.filter(|s| *s == 461 || *s == 471));
     let mut e = match c {
         Some(c) if HARD_RISK.contains(&c) || status == Some(461) => {
-            XhsError::new("risk_stop", format!("{what} 触发风控 {c} {msg}，已停止并锁定该 profile"), risk_hint(profile))
+            let desc = match (status, c) {
+                (Some(461), _) => format!("HTTP 461 人机验证/会话被收回（接口码 {c} {msg}）"),
+                _ => format!("{c} {msg}"),
+            };
+            XhsError::new("risk_stop", format!("{what} 触发风控 {desc}，已停止并锁定该 profile"), risk_hint(profile))
         }
         Some(c) if SOFT_RISK.contains(&c) => XhsError::new(
             "rate_limited",
