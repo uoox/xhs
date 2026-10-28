@@ -530,12 +530,16 @@ pub fn notifications(p: &mut Page, kind: &str, num: usize, pages: usize) -> Resu
                 "time": i(m, &["time"]) * if i(m, &["time"]) < 100_000_000_000 { 1000 } else { 1 },
                 "user_id": s(u, &["userid", "userId", "user_id"]),
                 "nickname": s(u, &["nickname"]),
+                "avatar": s(u, &["image", "avatar"]),
                 "note_id": note_id,
+                "note_cover": s(item, &["image"]),
                 "note_title": s(item, &["content"]),
                 "comment_id": s(ci, &["id"]),
                 "comment": s(ci, &["content"]),
                 "target_comment": s(o(ci, &["targetComment", "target_comment"]), &["content"]),
                 "xsec_token": s(u, &["xsecToken", "xsec_token"]),
+                "note_xsec_token": s(item, &["xsecToken", "xsec_token"]),
+                "note_link": s(item, &["link"]),
             }));
         }
         more = b(&d, &["hasMore", "has_more"]);
